@@ -26,8 +26,8 @@ func apiHost() string {
 	return DefaultAPIHost
 }
 
-// New .
-func New(p *types.Package) *Swagger {
+// NewGenerator .
+func NewGenerator(p *types.Package) *Swagger {
 	var title = conf.Get().Title
 	if len(title) == 0 {
 		title = p.Name
