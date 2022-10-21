@@ -1,0 +1,9 @@
+host: 127.0.0.1
+title: test
+header:
+  - Authorization
+document:
+  - type: swagger
+    file: doc/swagger.json
+  - type: postman
+    file: doc/postman.json
