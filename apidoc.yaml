@@ -3,7 +3,11 @@ title: test
 header:
   - Authorization
 document:
-  - type: swagger
-    file: doc/swagger.json
+  - type: html
+    file: api.html
+  - type: markdown
+    file: api.md
   - type: postman
-    file: doc/postman.json
+    file: postman.json
+  - type: swagger
+    file: swagger.json
