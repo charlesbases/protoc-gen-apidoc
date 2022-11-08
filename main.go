@@ -7,6 +7,7 @@ import (
 	"github.com/charlesbases/protoc-gen-apidoc/conf"
 	"github.com/charlesbases/protoc-gen-apidoc/generator"
 	"github.com/charlesbases/protoc-gen-apidoc/generator/swagger"
+	"github.com/charlesbases/protoc-gen-apidoc/generator/template"
 	"github.com/charlesbases/protoc-gen-apidoc/logger"
 	"github.com/charlesbases/protoc-gen-apidoc/protoc"
 	"github.com/charlesbases/protoc-gen-apidoc/types"
@@ -18,7 +19,9 @@ func main() {
 			var gen generator.Generator
 			switch dt.Type {
 			case types.DocumentType_HTML:
+				gen = template.NewGenerator(p, template.HTML)
 			case types.DocumentType_Markdown:
+				gen = template.NewGenerator(p, template.Markdown)
 			case types.DocumentType_Swagger:
 				gen = swagger.NewGenerator(p)
 			case types.DocumentType_Postman:

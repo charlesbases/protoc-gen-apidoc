@@ -145,7 +145,7 @@ func (s *Swagger) parseProtoMessage(mess *types.Message) {
 		Type:        "object",
 		Description: mess.Description,
 	}
-	fields := make(map[string]*Definition, 0)
+	fields := make(map[string]*Definition, len(mess.Fields))
 
 	for _, mf := range mess.Fields {
 		fields[mf.ProtoName] = s.parseProtoMessageField(mf)
@@ -158,9 +158,10 @@ func (s *Swagger) parseProtoMessage(mess *types.Message) {
 
 // parseProtoMessageField .
 func (s *Swagger) parseProtoMessageField(mf *types.MessageField) *Definition {
-	var field = new(Definition)
+	var field = &Definition{Description: mf.Description}
 	if def, found := prototypes[mf.ProtoType]; found {
-		field = def
+		field.Type = def.Type
+		field.Format = def.Format
 	} else {
 		switch mf.ProtoType {
 		case descriptorpb.FieldDescriptorProto_TYPE_ENUM:
