@@ -46,44 +46,18 @@
 
 ### 运行
 
+- ###### 运行参数
+
+  - host: 接口地址
+  - port: 接口端口
+  - title: 服务名称
+  - header: 请求头
+  - output: 输出格式。支持 swagger、postman、html、markdown
+
 ```shell
-# 默认配置文件路径(./aidoc.yaml)
-protoc -I=${GOPATH}/src:. --apidoc_out=. pb/*.proto
-
-# 指定配置文件路径
-protoc -I=${GOPATH}/src:. --apidoc_out=configfile=others/apidoc.yaml:. pb/*.proto
-```
-
-### 参数
-
-- ##### configfile: 配置文件路径。默认 "./apidoc.yaml"
-
-### 配置文件
-
-```yaml
-# api host
-host: 127.0.0.1
-# service name
-title: test
-# 添加 header
-header:
-  - Authorization
-# 生成文档类型
-document:
-  # HTML
-  - type: html
-    # 文档路径
-    file: api.html
-  # Markdown
-  - type: markdown
-    file: api.md
-  # Postman
-  - type: postman
-    file: postman.json
-  # Swagger API
-  - type: swagger
-    file: swagger.json
-
+protoc -I=${GOPATH}/src:. --gogo_out=paths=source_relative:. \
+  --apidoc_out=host=0.0.0.0,port=8080,title=User,header=Authorization,output=swagger,output=postman:swagger/static \
+  pb/*.proto
 ```
 
 ### proto 文件注释格式

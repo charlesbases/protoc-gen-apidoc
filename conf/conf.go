@@ -10,14 +10,16 @@ type arg string
 
 const (
 	// defaultAPIHost .
-	defaultAPIHost = "127.0.0.1"
+	defaultAPIHost = "0.0.0.0"
 )
 
 var config *configuration
 
 // configuration .
 type configuration struct {
+	Addr     string
 	Host     string         `yaml:"host"`
+	Port     string         `yaml:"port"`
 	Title    string         `yaml:"title"`
 	Header   []types.Header `yaml:"header"`
 	Document []*Document    `yaml:"document"`
@@ -47,6 +49,9 @@ func Parse(args string) {
 	} else {
 		config.Host = strings.ToLower(config.Host)
 	}
+
+	// Addr
+	config.Addr = strings.Join([]string{config.Host, config.Port}, ":")
 }
 
 // Get .

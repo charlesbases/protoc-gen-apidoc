@@ -14,18 +14,17 @@ import (
 )
 
 const (
-	_swaggerVersion = "2.0"
-	_defaultAPIHost = "127.0.0.1"
+	swaggerVersion = "2.0"
 )
 
-var _defaultSchemes = []string{"http", "https"}
+var defaultSchemes = []string{"http", "https"}
 
-// apiHost .
-func apiHost() string {
-	if len(conf.Get().Host) != 0 {
-		return conf.Get().Host
+// host .
+func host() string {
+	if len(conf.Get().Port) != 0 {
+		return conf.Get().Host + ":" + conf.Get().Port
 	}
-	return _defaultAPIHost
+	return conf.Get().Host
 }
 
 // NewGenerator .
@@ -38,15 +37,15 @@ func NewGenerator(p *types.Package) generator.Generator {
 	var s = &Swagger{
 		p: p,
 
-		Swagger: _swaggerVersion,
+		Swagger: swaggerVersion,
 		Info: &Info{
 			Title:       title,
 			Version:     p.Version,
 			Description: title,
 		},
-		Host:     apiHost(),
+		Host:     conf.Get().Addr,
 		BasePath: "",
-		Schemes:  _defaultSchemes,
+		Schemes:  defaultSchemes,
 		Paths:    make(map[string]map[string]*API, 0),
 	}
 

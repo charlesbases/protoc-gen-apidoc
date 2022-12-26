@@ -1,9 +1,6 @@
 package main
 
 import (
-	"os"
-	"path/filepath"
-
 	"github.com/charlesbases/protoc-gen-apidoc/conf"
 	"github.com/charlesbases/protoc-gen-apidoc/generator"
 	"github.com/charlesbases/protoc-gen-apidoc/generator/postman"
@@ -12,10 +9,13 @@ import (
 	"github.com/charlesbases/protoc-gen-apidoc/logger"
 	"github.com/charlesbases/protoc-gen-apidoc/protoc"
 	"github.com/charlesbases/protoc-gen-apidoc/types"
+	"google.golang.org/protobuf/types/pluginpb"
 )
 
 func main() {
-	protoc.Plugin(func(p *types.Package) {
+	protoc.Plugin(func(p *types.Package) *pluginpb.CodeGeneratorResponse {
+		var rsp = new(pluginpb.CodeGeneratorResponse)
+
 		for _, dt := range conf.Get().Document {
 			var gen generator.Generator
 			switch dt.Type {
@@ -32,22 +32,14 @@ func main() {
 			}
 
 			if data := gen.Generate(); len(data) != 0 {
-				// 文件夹创建
-				dt.File, _ = filepath.Abs(dt.File)
-				var dir = filepath.Dir(dt.File)
-				if _, err := os.Stat(dir); err != nil && os.IsNotExist(err) {
-					os.MkdirAll(dir, 0755)
-				}
-
-				// 文件写入
-				df, err := os.OpenFile(dt.File, os.O_CREATE|os.O_RDWR|os.O_TRUNC, 0755)
-				if err != nil {
-					logger.Fatalf(`open file "%s" failed. %v`, dt.File, err)
-				}
-				defer df.Close()
-
-				df.Write(gen.Generate())
+				var content = string(data)
+				rsp.File = append(rsp.File, &pluginpb.CodeGeneratorResponse_File{
+					Name:    &dt.File,
+					Content: &content,
+				})
 			}
 		}
+
+		return rsp
 	})
 }

@@ -14,7 +14,7 @@ type Postman struct {
 
 // Info .
 type Info struct {
-	ID     string `json:"_postman_id"`
+	ID     string `json:"-"`
 	Name   string `json:"name"`
 	Schema string `json:"schema"`
 }

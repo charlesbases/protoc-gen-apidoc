@@ -9,6 +9,7 @@ import (
 
 const (
 	argHost   arg = "host"
+	argPort   arg = "port"
 	argTitle  arg = "title"
 	argHeader arg = "header"
 	argOutput arg = "output"
@@ -42,6 +43,8 @@ func (opts *argsOptions) parse() *configuration {
 			switch arg(param) {
 			case argHost:
 				conf.Host = value
+			case argPort:
+				conf.Port = value
 			case argTitle:
 				conf.Title = value
 			case argHeader:

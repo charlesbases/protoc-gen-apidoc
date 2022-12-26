@@ -19,7 +19,7 @@ import (
 )
 
 // Plugin .
-func Plugin(fn func(p *types.Package)) {
+func Plugin(fn func(p *types.Package) *pluginpb.CodeGeneratorResponse) {
 	var buff = new(bytes.Buffer)
 	if _, err := io.Copy(buff, os.Stdin); err != nil {
 		logger.Fatal("read os.Stdin failed. ", err)
@@ -37,7 +37,16 @@ func Plugin(fn func(p *types.Package)) {
 	conf.Parse(req.GetParameter())
 
 	// proto 解析
-	fn(parse(req))
+	stdout(fn(parse(req)))
+}
+
+// stdout .
+func stdout(rsp *pluginpb.CodeGeneratorResponse) {
+	if data, err := proto.Marshal(rsp); err != nil {
+		logger.Fatal(err)
+	} else {
+		os.Stdout.Write(data)
+	}
 }
 
 // parse 解析 proto 文件

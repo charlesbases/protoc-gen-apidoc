@@ -29,15 +29,12 @@ func newPostman(p *types.Package) *Postman {
 				url.Protocol = "http"
 			}
 
-			// host、port
 			if idx := strings.Index(host, "//"); idx != -1 {
 				host = host[idx+2:]
 			}
-			if idx := strings.LastIndex(host, ":"); idx != -1 {
-				url.Port = host[idx+1:]
-				host = host[:idx]
-			}
+
 			url.Host = strings.Split(host, ".")
+			url.Port = conf.Get().Port
 
 			return url
 		}(),
@@ -107,7 +104,7 @@ func (pt *Postman) parseServiceAPI(api *types.ServiceMethod) *API {
 			Method: api.Method,
 			Header: pt.header,
 			URL: &URL{
-				Raw:      conf.Get().Host + api.Path,
+				Raw:      conf.Get().Addr + api.Path,
 				Protocol: pt.host.Protocol,
 				Host:     pt.host.Host,
 				Port:     pt.host.Port,
