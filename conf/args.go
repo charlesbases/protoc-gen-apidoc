@@ -3,6 +3,7 @@ package conf
 import (
 	"strings"
 
+	"github.com/charlesbases/protoc-gen-apidoc/logger"
 	"github.com/charlesbases/protoc-gen-apidoc/types"
 )
 
@@ -67,6 +68,8 @@ func (opts *argsOptions) parse() *configuration {
 						Type: types.DocumentType_Swagger,
 						File: "apidoc.md",
 					})
+				default:
+					logger.Fatalf(`invalid type of "%s"`, value)
 				}
 			}
 		}
