@@ -6,6 +6,7 @@ import (
 	"html/template"
 	"strings"
 
+	"github.com/charlesbases/protoc-gen-apidoc/encoder"
 	"github.com/charlesbases/protoc-gen-apidoc/generator"
 	"github.com/charlesbases/protoc-gen-apidoc/logger"
 	"github.com/charlesbases/protoc-gen-apidoc/types"
@@ -99,6 +100,8 @@ func (g *Generator) jsonType(field *types.MessageField) template.HTML {
 
 // jsonMarshal json parse for message
 func (g *Generator) jsonMarshal(messageName string) template.HTML {
-	encoder := &encoder{p: g.p}
-	return encoder.marshal(messageName)
+	if data := encoder.NewEncoder(g.p).EncodeJson(messageName); len(data) != 0 {
+		return template.HTML(data)
+	}
+	return "null"
 }

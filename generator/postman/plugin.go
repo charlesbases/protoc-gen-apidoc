@@ -123,7 +123,8 @@ func (pt *Postman) parseServiceAPI(api *types.ServiceMethod) *API {
 			ptAPI.Request.URL.Query = make([]*Query, 0, len(mess.Fields))
 			for _, field := range mess.Fields {
 				ptAPI.Request.URL.Query = append(ptAPI.Request.URL.Query, &Query{
-					Key: field.JsonName,
+					Key:         field.JsonName,
+					Description: field.Description,
 				})
 			}
 		// Body
