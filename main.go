@@ -6,6 +6,7 @@ import (
 
 	"github.com/charlesbases/protoc-gen-apidoc/conf"
 	"github.com/charlesbases/protoc-gen-apidoc/generator"
+	"github.com/charlesbases/protoc-gen-apidoc/generator/postman"
 	"github.com/charlesbases/protoc-gen-apidoc/generator/swagger"
 	"github.com/charlesbases/protoc-gen-apidoc/generator/template"
 	"github.com/charlesbases/protoc-gen-apidoc/logger"
@@ -25,6 +26,7 @@ func main() {
 			case types.DocumentType_Swagger:
 				gen = swagger.NewGenerator(p)
 			case types.DocumentType_Postman:
+				gen = postman.NewGenerator(p)
 			default:
 				logger.Fatalf(`invalid type of "%s"`, dt.Type)
 			}

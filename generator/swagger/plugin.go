@@ -6,28 +6,30 @@ import (
 	"strings"
 
 	"github.com/charlesbases/protoc-gen-apidoc/conf"
+	"github.com/charlesbases/protoc-gen-apidoc/generator"
 	"github.com/charlesbases/protoc-gen-apidoc/logger"
 	"github.com/charlesbases/protoc-gen-apidoc/protoc"
 	"github.com/charlesbases/protoc-gen-apidoc/types"
 	"google.golang.org/protobuf/types/descriptorpb"
 )
 
-const SwaggerVersion = "2.0"
+const (
+	_swaggerVersion = "2.0"
+	_defaultAPIHost = "127.0.0.1"
+)
 
-const DefaultAPIHost = "127.0.0.1"
-
-var DefaultSchemes = []string{"http", "https"}
+var _defaultSchemes = []string{"http", "https"}
 
 // apiHost .
 func apiHost() string {
 	if len(conf.Get().Host) != 0 {
 		return conf.Get().Host
 	}
-	return DefaultAPIHost
+	return _defaultAPIHost
 }
 
 // NewGenerator .
-func NewGenerator(p *types.Package) *Swagger {
+func NewGenerator(p *types.Package) generator.Generator {
 	var title = conf.Get().Title
 	if len(title) == 0 {
 		title = p.Name
@@ -36,7 +38,7 @@ func NewGenerator(p *types.Package) *Swagger {
 	var s = &Swagger{
 		p: p,
 
-		Swagger: SwaggerVersion,
+		Swagger: _swaggerVersion,
 		Info: &Info{
 			Title:       title,
 			Version:     p.Version,
@@ -44,7 +46,7 @@ func NewGenerator(p *types.Package) *Swagger {
 		},
 		Host:     apiHost(),
 		BasePath: "",
-		Schemes:  DefaultSchemes,
+		Schemes:  _defaultSchemes,
 		Paths:    make(map[string]map[string]*API, 0),
 	}
 
@@ -223,7 +225,7 @@ func (s *Swagger) push(uri string, method string, api *API) {
 
 // parameterPosition .
 func (api *API) parameterPosition(m *types.ServiceMethod) Position {
-	if m.Consume == "multipart/form-data" {
+	if m.Consume == types.ContentType_Data {
 		return PositionFormData
 	}
 

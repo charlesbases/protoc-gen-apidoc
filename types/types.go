@@ -16,7 +16,10 @@ const (
 
 type ContentType string
 
-const ContentType_Json ContentType = "application/json"
+const (
+	ContentType_Json ContentType = "application/json"
+	ContentType_Data ContentType = "multipart/form-data"
+)
 
 type Method string
 

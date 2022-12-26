@@ -9,11 +9,11 @@ import (
 type arg string
 
 const (
-	// argConfigfile 配置文件路径
-	argConfigfile arg = "configfile"
+	// _argConfigfile 配置文件路径
+	_argConfigfile arg = "configfile"
 
-	// defaultAPIHost .
-	defaultAPIHost = "127.0.0.1"
+	// _defaultAPIHost .
+	_defaultAPIHost = "127.0.0.1"
 )
 
 var config *configuration
@@ -39,7 +39,7 @@ type parser interface {
 
 // Parse .
 func Parse(args string) {
-	var configfile = defaultConfigfile
+	var configfile = _defaultConfigfile
 
 	if len(args) != 0 {
 		for _, param := range strings.Split(args, ",") {
@@ -51,7 +51,7 @@ func Parse(args string) {
 
 			switch arg(param) {
 			// 配置文件
-			case argConfigfile:
+			case _argConfigfile:
 				configfile = value
 			}
 		}
@@ -62,7 +62,9 @@ func Parse(args string) {
 
 	// Default
 	if len(config.Host) == 0 {
-		config.Host = defaultAPIHost
+		config.Host = _defaultAPIHost
+	} else {
+		config.Host = strings.ToLower(config.Host)
 	}
 }
 

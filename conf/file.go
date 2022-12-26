@@ -10,7 +10,7 @@ import (
 	"github.com/charlesbases/protoc-gen-apidoc/logger"
 )
 
-const defaultConfigfile = "apidoc.yaml"
+const _defaultConfigfile = "apidoc.yaml"
 
 // fileOptions .
 type fileOptions struct {
