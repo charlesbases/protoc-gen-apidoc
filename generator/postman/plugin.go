@@ -12,6 +12,8 @@ import (
 	"github.com/google/uuid"
 )
 
+const defaultHost = "0.0.0.0"
+
 // newPostman .
 func newPostman(p *types.Package) *Postman {
 	return &Postman{
@@ -21,6 +23,10 @@ func newPostman(p *types.Package) *Postman {
 				url  = new(URL)
 				host = conf.Get().Host
 			)
+
+			if len(host) == 0 {
+				host = defaultHost
+			}
 
 			// http or https
 			if strings.HasPrefix(host, "https") {
@@ -104,7 +110,7 @@ func (pt *Postman) parseServiceAPI(api *types.ServiceMethod) *API {
 			Method: api.Method,
 			Header: pt.header,
 			URL: &URL{
-				Raw:      conf.Get().Addr + api.Path,
+				Raw:      conf.Get().Host + api.Path,
 				Protocol: pt.host.Protocol,
 				Host:     pt.host.Host,
 				Port:     pt.host.Port,

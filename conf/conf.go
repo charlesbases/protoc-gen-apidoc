@@ -8,16 +8,10 @@ import (
 
 type arg string
 
-const (
-	// defaultAPIHost .
-	defaultAPIHost = "0.0.0.0"
-)
-
 var config *configuration
 
 // configuration .
 type configuration struct {
-	Addr     string
 	Host     string         `yaml:"host"`
 	Port     string         `yaml:"port"`
 	Title    string         `yaml:"title"`
@@ -43,15 +37,9 @@ func Parse(args string) {
 	// 输入参数解析
 	config = newArgsParser(args).parse()
 
-	// Default
-	if len(config.Host) == 0 {
-		config.Host = defaultAPIHost
-	} else {
+	if len(config.Host) != 0 {
 		config.Host = strings.ToLower(config.Host)
 	}
-
-	// Addr
-	config.Addr = strings.Join([]string{config.Host, config.Port}, ":")
 }
 
 // Get .

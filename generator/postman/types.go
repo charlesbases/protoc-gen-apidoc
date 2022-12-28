@@ -35,8 +35,8 @@ type API struct {
 // Request .
 type Request struct {
 	Method types.Method `json:"method"`
-	Header []*Header    `json:"header"`
-	Body   *Body        `json:"body"`
+	Header []*Header    `json:"header,omitempty"`
+	Body   *Body        `json:"body,omitempty"`
 	URL    *URL         `json:"url"`
 }
 
@@ -46,7 +46,7 @@ type Response struct{}
 // Header .
 type Header struct {
 	Key   string `json:"key"`
-	Value string `json:"value"`
+	Value string `json:"value,omitempty"`
 	Type  string `json:"type"`
 }
 
@@ -85,7 +85,7 @@ type URL struct {
 	Raw      string   `json:"raw"`
 	Protocol string   `json:"protocol"`
 	Host     []string `json:"host"`
-	Port     string   `json:"port"`
+	Port     string   `json:"port,omitempty"`
 	Path     []string `json:"path"`
-	Query    []*Query `json:"query"`
+	Query    []*Query `json:"query,omitempty"`
 }

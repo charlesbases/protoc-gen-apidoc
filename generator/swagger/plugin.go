@@ -19,14 +19,6 @@ const (
 
 var defaultSchemes = []string{"http", "https"}
 
-// host .
-func host() string {
-	if len(conf.Get().Port) != 0 {
-		return conf.Get().Host + ":" + conf.Get().Port
-	}
-	return conf.Get().Host
-}
-
 // NewGenerator .
 func NewGenerator(p *types.Package) generator.Generator {
 	var title = conf.Get().Title
@@ -43,7 +35,12 @@ func NewGenerator(p *types.Package) generator.Generator {
 			Version:     p.Version,
 			Description: title,
 		},
-		Host:     conf.Get().Addr,
+		Host: func() string {
+			if len(conf.Get().Host) != 0 {
+				return strings.Join([]string{conf.Get().Host, conf.Get().Port}, ":")
+			}
+			return ""
+		}(),
 		BasePath: "",
 		Schemes:  defaultSchemes,
 		Paths:    make(map[string]map[string]*API, 0),
