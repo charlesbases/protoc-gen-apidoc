@@ -63,12 +63,12 @@ func (opts *argsOptions) parse() *configuration {
 					})
 				case types.DocumentType_HTML:
 					conf.Document = append(conf.Document, &Document{
-						Type: types.DocumentType_Swagger,
+						Type: types.DocumentType_HTML,
 						File: "apidoc.html",
 					})
 				case types.DocumentType_Markdown:
 					conf.Document = append(conf.Document, &Document{
-						Type: types.DocumentType_Swagger,
+						Type: types.DocumentType_Markdown,
 						File: "apidoc.md",
 					})
 				default:
