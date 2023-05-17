@@ -1,6 +1,7 @@
 package conf
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/charlesbases/protoc-gen-apidoc/logger"
@@ -52,24 +53,44 @@ func (opts *argsOptions) parse() *configuration {
 			case argOutput:
 				switch types.DocumentType(value) {
 				case types.DocumentType_Swagger:
+					var filename = "swagger.json"
+					if len(conf.Title) != 0 {
+						filename = fmt.Sprintf("%s.%s", strings.ToLower(conf.Title), filename)
+					}
+
 					conf.Document = append(conf.Document, &Document{
 						Type: types.DocumentType_Swagger,
-						File: "swagger.json",
+						File: filename,
 					})
 				case types.DocumentType_Postman:
+					var filename = "postman.json"
+					if len(conf.Title) != 0 {
+						filename = fmt.Sprintf("%s.%s", strings.ToLower(conf.Title), filename)
+					}
+
 					conf.Document = append(conf.Document, &Document{
 						Type: types.DocumentType_Postman,
-						File: "postman.json",
+						File: filename,
 					})
 				case types.DocumentType_HTML:
+					var filename = "apidoc.html"
+					if len(conf.Title) != 0 {
+						filename = fmt.Sprintf("%s.html", strings.ToLower(conf.Title))
+					}
+
 					conf.Document = append(conf.Document, &Document{
 						Type: types.DocumentType_HTML,
-						File: "apidoc.html",
+						File: filename,
 					})
 				case types.DocumentType_Markdown:
+					var filename = "apidoc.md"
+					if len(conf.Title) != 0 {
+						filename = fmt.Sprintf("%s.md", strings.ToLower(conf.Title))
+					}
+
 					conf.Document = append(conf.Document, &Document{
 						Type: types.DocumentType_Markdown,
-						File: "apidoc.md",
+						File: filename,
 					})
 				default:
 					logger.Fatalf(`invalid type of "%s"`, value)
