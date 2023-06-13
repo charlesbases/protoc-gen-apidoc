@@ -107,7 +107,6 @@ func (opts *argsOptions) parse() *configuration {
 
 	// default document
 	if len(conf.Document) == 0 {
-		logger.Debugf(`use default document: "swagger"`)
 		conf.Document = append(conf.Document, &Document{
 			Type: types.DocumentTypeSwagger,
 			File: "swagger.json",

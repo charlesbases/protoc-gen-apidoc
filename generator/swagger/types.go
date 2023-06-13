@@ -54,6 +54,15 @@ const (
 	PositionPath     Position = "path"
 )
 
+// SecurityType type
+type SecurityType string
+
+const (
+	SecurityTypeBasic  SecurityType = "basic"
+	SecurityTypeApiKey SecurityType = "apiKey"
+	SecurityTypeOAuth2 SecurityType = "oauth2"
+)
+
 // Swagger .
 type Swagger struct {
 	p *types.Package `json:"-"`
@@ -74,6 +83,8 @@ type Swagger struct {
 	Paths map[string]map[string]*API `json:"paths,omitempty"`
 	// Definitions model list
 	Definitions map[string]*Definition `json:"definitions,omitempty"`
+	// SecurityDefinitions .
+	SecurityDefinitions map[string]*Security `json:"securityDefinitions,omitempty"`
 }
 
 // Info service info
@@ -122,6 +133,13 @@ type Definition struct {
 
 	// Nesteds nested
 	Nesteds map[string]*Definition `json:"properties,omitempty"`
+}
+
+// Security .
+type Security struct {
+	Type SecurityType `json:"type,omitempty"`
+	Name types.Header `json:"name,omitempty"`
+	In   Position     `json:"in,omitempty"`
 }
 
 // API .

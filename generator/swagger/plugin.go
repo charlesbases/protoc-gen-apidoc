@@ -42,6 +42,20 @@ func NewGenerator(p *types.Package) generator.Generator {
 		BasePath: "",
 		Schemes:  conf.Get().Schemes,
 		Paths:    make(map[string]map[string]*API, 0),
+		SecurityDefinitions: func() map[string]*Security {
+			if len(conf.Get().Header) != 0 {
+				headers := make(map[string]*Security, len(conf.Get().Header))
+				for _, h := range conf.Get().Header {
+					headers[h.String()] = &Security{
+						Type: SecurityTypeApiKey,
+						Name: h,
+						In:   PositionHeader,
+					}
+				}
+				return headers
+			}
+			return nil
+		}(),
 	}
 
 	s.parseDefinitions()
@@ -243,7 +257,7 @@ func (api *API) parseResponses(s *Swagger, m *types.ServiceMethod) {
 
 // parseParameter .
 func (api *API) parseParameter(s *Swagger, m *types.ServiceMethod) {
-	api.parseParameterInHeader()
+	// api.parseParameterInHeader()
 	api.parseParameterInPath(m)
 
 	switch api.parameterPosition(m) {
@@ -257,18 +271,18 @@ func (api *API) parseParameter(s *Swagger, m *types.ServiceMethod) {
 }
 
 // parseParameterInHeader .
-func (api *API) parseParameterInHeader() {
-	// Header
-	for _, header := range conf.Get().Header {
-		api.Parameters = append(api.Parameters, &Parameter{
-			In:          PositionHeader,
-			Name:        header.String(),
-			Type:        "string",
-			Required:    false,
-			Description: header.Desc(),
-		})
-	}
-}
+// func (api *API) parseParameterInHeader() {
+// 	// Header
+// 	for _, header := range conf.Get().Header {
+// 		api.Parameters = append(api.Parameters, &Parameter{
+// 			In:          PositionHeader,
+// 			Name:        header.String(),
+// 			Type:        "string",
+// 			Required:    false,
+// 			Description: header.Desc(),
+// 		})
+// 	}
+// }
 
 // parseParameter .
 func (api *API) parseParameterInPath(m *types.ServiceMethod) {
