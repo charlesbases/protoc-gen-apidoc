@@ -6,6 +6,16 @@ import (
 	"github.com/charlesbases/colors"
 )
 
+// Debug .
+func Debug(v ...interface{}) {
+	os.Stdout.WriteString(colors.GreenSprint(v...))
+}
+
+// Debugf .
+func Debugf(format string, v ...interface{}) {
+	os.Stdout.WriteString(colors.GreenSprintf(format, v...))
+}
+
 // Fatal .
 func Fatal(v ...interface{}) {
 	stderr(colors.RedSprint(v...))

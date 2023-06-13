@@ -150,26 +150,26 @@ func (cs comments) parseMethod(dmdp *descriptorpb.MethodDescriptorProto, paths .
 		switch opt.GetPattern().(type) {
 		case *httppb.Http_Get:
 			method.Path = opt.GetGet()
-			method.Method = types.Method_Get
+			method.Method = types.MethodGet
 		case *httppb.Http_Put:
 			method.Path = opt.GetPut()
-			method.Method = types.Method_Put
+			method.Method = types.MethodPut
 		case *httppb.Http_Post:
 			method.Path = opt.GetPost()
-			method.Method = types.Method_Post
+			method.Method = types.MethodPost
 		case *httppb.Http_Delete:
 			method.Path = opt.GetDelete()
-			method.Method = types.Method_Delete
+			method.Method = types.MethodDelete
 		}
 
 		method.Consume = types.ContentType(opt.GetConsume())
 		method.Produce = types.ContentType(opt.GetProduce())
 	}
 	if method.Produce == "" {
-		method.Produce = types.ContentType_Json
+		method.Produce = types.ContentTypeJson
 	}
-	if method.Consume == "" && method.Method != types.Method_Get {
-		method.Consume = types.ContentType_Json
+	if method.Consume == "" && method.Method != types.MethodGet {
+		method.Consume = types.ContentTypeJson
 	}
 
 	return method

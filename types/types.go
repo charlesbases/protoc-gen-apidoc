@@ -8,26 +8,26 @@ import (
 type DocumentType string
 
 const (
-	DocumentType_HTML     DocumentType = "html"
-	DocumentType_Markdown DocumentType = "markdown"
-	DocumentType_Postman  DocumentType = "postman"
-	DocumentType_Swagger  DocumentType = "swagger"
+	DocumentTypeHTML     DocumentType = "html"
+	DocumentTypeMarkdown DocumentType = "markdown"
+	DocumentTypePostman  DocumentType = "postman"
+	DocumentTypeSwagger  DocumentType = "swagger"
 )
 
 type ContentType string
 
 const (
-	ContentType_Json ContentType = "application/json"
-	ContentType_Data ContentType = "multipart/form-data"
+	ContentTypeJson ContentType = "application/json"
+	ContentTypeData ContentType = "multipart/form-data"
 )
 
 type Method string
 
 const (
-	Method_Get    Method = "GET"
-	Method_Put    Method = "PUT"
-	Method_Post   Method = "POST"
-	Method_Delete Method = "DELETE"
+	MethodGet    Method = "GET"
+	MethodPut    Method = "PUT"
+	MethodPost   Method = "POST"
+	MethodDelete Method = "DELETE"
 )
 
 // String .
@@ -38,13 +38,13 @@ func (m Method) String() string {
 // LowerCase .
 func (m Method) LowerCase() string {
 	switch m {
-	case Method_Get:
+	case MethodGet:
 		return "get"
-	case Method_Put:
+	case MethodPut:
 		return "put"
-	case Method_Post:
+	case MethodPost:
 		return "post"
-	case Method_Delete:
+	case MethodDelete:
 		return "delete"
 	default:
 		return ""

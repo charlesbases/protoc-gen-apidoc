@@ -122,7 +122,7 @@ func (pt *Postman) parseServiceAPI(api *types.ServiceMethod) *API {
 	if mess, find := pt.p.MessageDic[api.RequestName]; find && len(mess.Fields) != 0 {
 		switch api.Method {
 		// Query
-		case types.Method_Get:
+		case types.MethodGet:
 			ptAPI.Request.URL.Query = make([]*Query, 0, len(mess.Fields))
 			for _, field := range mess.Fields {
 				ptAPI.Request.URL.Query = append(ptAPI.Request.URL.Query, &Query{
@@ -133,7 +133,7 @@ func (pt *Postman) parseServiceAPI(api *types.ServiceMethod) *API {
 		// Body
 		default:
 			switch api.Consume {
-			case types.ContentType_Json:
+			case types.ContentTypeJson:
 				ptAPI.Request.Body = &Body{
 					Mode: "raw",
 					Raw:  encoder.NewEncoder(pt.p).EncodeJson(api.RequestName),
@@ -143,7 +143,7 @@ func (pt *Postman) parseServiceAPI(api *types.ServiceMethod) *API {
 						}(struct{ Language string }{Language: "json"}),
 					},
 				}
-			case types.ContentType_Data:
+			case types.ContentTypeData:
 				ptAPI.Request.Body = &Body{
 					Mode: "formdata",
 					Formdata: []*BodyFormData{

@@ -219,7 +219,7 @@ func (s *Swagger) push(uri string, method string, api *API) {
 
 // parameterPosition .
 func (api *API) parameterPosition(m *types.ServiceMethod) Position {
-	if m.Consume == types.ContentType_Data {
+	if m.Consume == types.ContentTypeData {
 		return PositionFormData
 	}
 

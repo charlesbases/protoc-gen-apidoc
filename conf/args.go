@@ -58,44 +58,44 @@ func (opts *argsOptions) parse() *configuration {
 				conf.Schemes = append(conf.Schemes, value)
 			case argOutput:
 				switch types.DocumentType(value) {
-				case types.DocumentType_Swagger:
+				case types.DocumentTypeSwagger:
 					var filename = "swagger.json"
 					if len(conf.Title) != 0 {
 						filename = fmt.Sprintf("%s.%s", strings.ToLower(conf.Title), filename)
 					}
 
 					conf.Document = append(conf.Document, &Document{
-						Type: types.DocumentType_Swagger,
+						Type: types.DocumentTypeSwagger,
 						File: filename,
 					})
-				case types.DocumentType_Postman:
+				case types.DocumentTypePostman:
 					var filename = "postman.json"
 					if len(conf.Title) != 0 {
 						filename = fmt.Sprintf("%s.%s", strings.ToLower(conf.Title), filename)
 					}
 
 					conf.Document = append(conf.Document, &Document{
-						Type: types.DocumentType_Postman,
+						Type: types.DocumentTypePostman,
 						File: filename,
 					})
-				case types.DocumentType_HTML:
+				case types.DocumentTypeHTML:
 					var filename = "apidoc.html"
 					if len(conf.Title) != 0 {
 						filename = fmt.Sprintf("%s.html", strings.ToLower(conf.Title))
 					}
 
 					conf.Document = append(conf.Document, &Document{
-						Type: types.DocumentType_HTML,
+						Type: types.DocumentTypeHTML,
 						File: filename,
 					})
-				case types.DocumentType_Markdown:
+				case types.DocumentTypeMarkdown:
 					var filename = "apidoc.md"
 					if len(conf.Title) != 0 {
 						filename = fmt.Sprintf("%s.md", strings.ToLower(conf.Title))
 					}
 
 					conf.Document = append(conf.Document, &Document{
-						Type: types.DocumentType_Markdown,
+						Type: types.DocumentTypeMarkdown,
 						File: filename,
 					})
 				default:
@@ -103,6 +103,15 @@ func (opts *argsOptions) parse() *configuration {
 				}
 			}
 		}
+	}
+
+	// default document
+	if len(conf.Document) == 0 {
+		logger.Debugf(`use default document: "swagger"`)
+		conf.Document = append(conf.Document, &Document{
+			Type: types.DocumentTypeSwagger,
+			File: "swagger.json",
+		})
 	}
 
 	return conf

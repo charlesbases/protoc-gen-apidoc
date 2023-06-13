@@ -89,7 +89,7 @@ func newService(name, desc string) *types.Service {
 func newServiceMethod(name, desc string) *types.ServiceMethod {
 	return &types.ServiceMethod{
 		Name:        name,
-		Method:      types.Method_Post,
+		Method:      types.MethodPost,
 		Description: desc,
 	}
 }

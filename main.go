@@ -19,13 +19,13 @@ func main() {
 		for _, dt := range conf.Get().Document {
 			var gen generator.Generator
 			switch dt.Type {
-			case types.DocumentType_HTML:
+			case types.DocumentTypeHTML:
 				gen = template.NewGenerator(p, template.HTML)
-			case types.DocumentType_Markdown:
+			case types.DocumentTypeMarkdown:
 				gen = template.NewGenerator(p, template.Markdown)
-			case types.DocumentType_Swagger:
+			case types.DocumentTypeSwagger:
 				gen = swagger.NewGenerator(p)
-			case types.DocumentType_Postman:
+			case types.DocumentTypePostman:
 				gen = postman.NewGenerator(p)
 			default:
 				logger.Fatalf(`invalid type of "%s"`, dt.Type)

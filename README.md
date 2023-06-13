@@ -48,11 +48,34 @@
 
 - ###### 运行参数
 
-  - host: 接口地址
-  - port: 接口端口
-  - title: 服务名称
-  - header: 请求头
-  - output: 输出格式。支持 swagger、postman、html、markdown
+  - ###### host: 接口地址
+  
+  - ###### port: 接口端口
+  
+    ```txt
+    host、port 不指定时，swagger 会自动适配当前 swagger 文档的路径
+    ```
+  
+  - ###### title: 服务名称
+  
+    ```
+    不指定时，默认使用 pb 文件所在的 package name
+    ```
+  
+  - ###### header: 请求头
+  
+  - ###### output: 输出格式。支持 swagger、postman、html、markdown. (default: swagger)
+  
+  - ###### scheme: http or https
+  
+    ```
+    scheme 不指定时，swagger 会自动适配当前 swagger 文档的 scheme
+    ```
+
+```shell
+# default
+protoc -I=${GOPATH}/src:. --gogo_out=paths=source_relative:. --apidoc_out=header=Authorization:swagger/static pb/*.proto
+```
 
 ```shell
 protoc -I=${GOPATH}/src:. --gogo_out=paths=source_relative:. \
