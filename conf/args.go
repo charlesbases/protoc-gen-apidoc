@@ -9,11 +9,12 @@ import (
 )
 
 const (
-	argHost   arg = "host"
-	argPort   arg = "port"
-	argTitle  arg = "title"
-	argHeader arg = "header"
-	argOutput arg = "output"
+	argHost    arg = "host"
+	argPort    arg = "port"
+	argTitle   arg = "title"
+	argHeader  arg = "header"
+	argOutput  arg = "output"
+	argschemes arg = "scheme"
 )
 
 // argsOptions .
@@ -50,6 +51,11 @@ func (opts *argsOptions) parse() *configuration {
 				conf.Title = value
 			case argHeader:
 				conf.Header = append(conf.Header, types.Header(value))
+			case argschemes:
+				if len(conf.Schemes) == 0 {
+					conf.Schemes = make([]string, 0, 2)
+				}
+				conf.Schemes = append(conf.Schemes, value)
 			case argOutput:
 				switch types.DocumentType(value) {
 				case types.DocumentType_Swagger:

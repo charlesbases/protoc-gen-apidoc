@@ -17,8 +17,6 @@ const (
 	swaggerVersion = "2.0"
 )
 
-var defaultSchemes = []string{"http", "https"}
-
 // NewGenerator .
 func NewGenerator(p *types.Package) generator.Generator {
 	var title = conf.Get().Title
@@ -42,7 +40,7 @@ func NewGenerator(p *types.Package) generator.Generator {
 			return ""
 		}(),
 		BasePath: "",
-		Schemes:  defaultSchemes,
+		Schemes:  conf.Get().Schemes,
 		Paths:    make(map[string]map[string]*API, 0),
 	}
 

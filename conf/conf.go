@@ -16,6 +16,7 @@ type configuration struct {
 	Port     string         `yaml:"port"`
 	Title    string         `yaml:"title"`
 	Header   []types.Header `yaml:"header"`
+	Schemes  []string       `yaml:"schemes"`
 	Document []*Document    `yaml:"document"`
 }
 
